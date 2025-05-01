@@ -27,6 +27,9 @@ public class Mascota
     [Required]
     public string EstadoAdopcion { get; set; } = "disponible";
 
+    [NotNull]
+    public string? ImageURL { get; set; }
+
     public Adopcion? Adopcion { get; set; }
 }
 

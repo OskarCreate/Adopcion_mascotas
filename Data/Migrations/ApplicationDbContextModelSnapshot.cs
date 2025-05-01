@@ -71,6 +71,10 @@ namespace Adopcion_mascotas.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("ImageURL")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("NombreMascota")
                         .IsRequired()
                         .HasMaxLength(100)

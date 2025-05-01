@@ -10,20 +10,27 @@ namespace Adopcion_mascotas.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
+            migrationBuilder.AlterColumn<string>(
                 name: "ImageURL",
                 table: "t_mascota",
                 type: "TEXT",
-                nullable: false,
-                defaultValue: "");
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "TEXT");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
+            migrationBuilder.AlterColumn<string>(
                 name: "ImageURL",
-                table: "t_mascota");
+                table: "t_mascota",
+                type: "TEXT",
+                nullable: false,
+                defaultValue: "",
+                oldClrType: typeof(string),
+                oldType: "TEXT",
+                oldNullable: true);
         }
     }
 }

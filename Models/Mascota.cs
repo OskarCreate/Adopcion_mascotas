@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.CodeAnalysis;
 
 [Table("t_mascota")]
 public class Mascota
@@ -13,23 +12,22 @@ public class Mascota
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int MascotaId { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "Debe registrar un nombre")]
     [MaxLength(100)]
     public string NombreMascota { get; set; }
 
-    [Required]
-    public string Tipo { get; set; } // Perro, gato, etc.
+    [Required(ErrorMessage = "Debe registrar un tipo de mascota (gato, perro, etc.)")]
+    public string Tipo { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "Debe registrar la edad de la mascota")]
     [Range(0, 100)]
     public int Edad { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "Debe registrar su estado de adopción (disponible/adoptado)")]
     public string EstadoAdopcion { get; set; } = "disponible";
 
-    [NotNull]
-    public string? ImageURL { get; set; }
+    [Url(ErrorMessage = "Debe proporcionar una URL válida de imagen")]
+    public string? ImageURL { get; set; }  // Es opcional ahora
 
     public Adopcion? Adopcion { get; set; }
 }
-

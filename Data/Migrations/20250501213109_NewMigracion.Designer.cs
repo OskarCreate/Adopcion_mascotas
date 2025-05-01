@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Adopcion_mascotas.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250501210347_NewMigracion")]
+    [Migration("20250501213109_NewMigracion")]
     partial class NewMigracion
     {
         /// <inheritdoc />
@@ -75,7 +75,6 @@ namespace Adopcion_mascotas.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ImageURL")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("NombreMascota")

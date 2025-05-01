@@ -14,11 +14,14 @@ public class Adopcion
     public int AdopcionId { get; set; }
 
     [Required]
+    [ForeignKey("Mascota")]
     public int MascotaId { get; set; }
 
     [Required]
+    [ForeignKey("Adoptante")]
     public int AdoptanteId { get; set; }
 
     public Mascota Mascota { get; set; }
     public Adoptante Adoptante { get; set; }
 }
+

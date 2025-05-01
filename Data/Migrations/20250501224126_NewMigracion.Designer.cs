@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Adopcion_mascotas.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250501210347_NewMigracion")]
+    [Migration("20250501224126_NewMigracion")]
     partial class NewMigracion
     {
         /// <inheritdoc />

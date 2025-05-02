@@ -1,0 +1,35 @@
+@model IEnumerable<Adopcion>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Adopciones</h1>
+
+<p>
+    <a asp-action="Create">Crear nueva adopción</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Mascota</th>
+            <th>Adoptante</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model)
+{
+    <tr>
+        <td>@item.Mascota?.NombreMascota</td>
+        <td>@item.Adoptante?.NombreAdoptante</td>
+        <td>
+            <a asp-action="Edit" asp-route-id="@item.AdopcionId">Edit</a> |
+            <a asp-action="Details" asp-route-id="@item.AdopcionId">Details</a> |
+            <a asp-action="Delete" asp-route-id="@item.AdopcionId">Delete</a>
+        </td>
+    </tr>
+}
+    </tbody>
+</table>

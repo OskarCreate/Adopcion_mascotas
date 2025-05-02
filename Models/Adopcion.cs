@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 
+
 [Table("t_adopcion")]
 public class Adopcion
 {
@@ -21,7 +22,7 @@ public class Adopcion
     [ForeignKey("Adoptante")]
     public int AdoptanteId { get; set; }
 
-    public Mascota Mascota { get; set; }
-    public Adoptante Adoptante { get; set; }
+    public Mascota? Mascota { get; set; }
+    public Adoptante? Adoptante { get; set; }
 }
 

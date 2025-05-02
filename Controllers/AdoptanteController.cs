@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization; // Necesario para [Authorize]
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Adopcion_mascotas.Data;
+using Adopcion_mascotas.Helpers;
 
 namespace Adopcion_mascotas.Controllers
 {
@@ -58,7 +59,14 @@ namespace Adopcion_mascotas.Controllers
             {
                 _context.Add(adoptante);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Create)); // Redirige a Create para no exponer Index a no admins
+
+                // Guardar en la sesión
+                HttpContext.Session.Set("AdoptanteRegistrado", adoptante);
+
+                // O también puedes usar TempData (si solo necesitas mostrar un mensaje simple)
+                TempData["AdoptanteNombre"] = adoptante.NombreAdoptante;
+
+                return RedirectToAction("Privacy", "Home"); // Redirige al controlador Home
             }
             return View(adoptante);
         }

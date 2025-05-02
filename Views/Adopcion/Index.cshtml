@@ -6,16 +6,18 @@
 
 <h1>Adopciones</h1>
 
+@if (User.IsInRole("Admin"))
+{
 <p>
     <a asp-action="Create">Crear nueva adopción</a>
 </p>
-
+}
 <table class="table">
     <thead>
         <tr>
-            <th>Mascota</th>
-            <th>Adoptante</th>
-            <th></th>
+            <th>Nombre de la mascota</th>
+            <th>Nombre del adoptante</th>
+            <th>Estado de la adopción</th>
         </tr>
     </thead>
     <tbody>
@@ -24,10 +26,13 @@
     <tr>
         <td>@item.Mascota?.NombreMascota</td>
         <td>@item.Adoptante?.NombreAdoptante</td>
+        <td>@item.Mascota?.EstadoAdopcion</td>
         <td>
-            <a asp-action="Edit" asp-route-id="@item.AdopcionId">Edit</a> |
+            @if (User.IsInRole("Admin"))
+            {<a asp-action="Edit" asp-route-id="@item.AdopcionId">Edit</a>} |
             <a asp-action="Details" asp-route-id="@item.AdopcionId">Details</a> |
-            <a asp-action="Delete" asp-route-id="@item.AdopcionId">Delete</a>
+            @if (User.IsInRole("Admin"))
+            {<a asp-action="Delete" asp-route-id="@item.AdopcionId">Delete</a>}
         </td>
     </tr>
 }

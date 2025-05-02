@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Adopcion_mascotas.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Adopcion_mascotas.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class MascotaController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -43,6 +45,7 @@ namespace Adopcion_mascotas.Controllers
         }
 
         // GET: Mascota/Create
+        
         public IActionResult Create()
         {
             return View();

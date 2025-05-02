@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Adopcion_mascotas.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Adopcion_mascotas.Controllers
 {
@@ -46,6 +47,7 @@ namespace Adopcion_mascotas.Controllers
         }
 
         // GET: Adopcion/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             ViewData["AdoptanteId"] = new SelectList(_context.DbSetAdoptante, "AdoptanteId", "NombreAdoptante");
@@ -59,6 +61,7 @@ namespace Adopcion_mascotas.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(Adopcion adopcion)
         {
             var adopciones = _context.DbSetAdopcion.ToList();
@@ -100,6 +103,7 @@ namespace Adopcion_mascotas.Controllers
 
 
         // GET: Adopcion/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -123,6 +127,7 @@ namespace Adopcion_mascotas.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("AdopcionId,MascotaId,AdoptanteId")] Adopcion adopcion)
         {
             if (id != adopcion.AdopcionId)
@@ -157,6 +162,7 @@ namespace Adopcion_mascotas.Controllers
         }
 
         // GET: Adopcion/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -179,6 +185,7 @@ namespace Adopcion_mascotas.Controllers
         // POST: Adopcion/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var adopcion = await _context.DbSetAdopcion.FindAsync(id);

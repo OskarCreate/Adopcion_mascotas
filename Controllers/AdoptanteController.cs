@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization; // Necesario para [Authorize]
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Adopcion_mascotas.Data;
 
@@ -18,39 +18,38 @@ namespace Adopcion_mascotas.Controllers
             _context = context;
         }
 
-        // GET: Adoptante
+        // Solo Admin puede ver la lista
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             return View(await _context.DbSetAdoptante.ToListAsync());
         }
 
-        // GET: Adoptante/Details/5
+        // Solo Admin puede ver detalles
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var adoptante = await _context.DbSetAdoptante
                 .FirstOrDefaultAsync(m => m.AdoptanteId == id);
+
             if (adoptante == null)
-            {
                 return NotFound();
-            }
 
             return View(adoptante);
         }
 
-        // GET: Adoptante/Create
+        // Cualquier usuario puede crear adoptante
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Adoptante/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("AdoptanteId,NombreAdoptante,CorreoElectronico")] Adoptante adoptante)
@@ -59,38 +58,33 @@ namespace Adopcion_mascotas.Controllers
             {
                 _context.Add(adoptante);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Create)); // Redirige a Create para no exponer Index a no admins
             }
             return View(adoptante);
         }
 
-        // GET: Adoptante/Edit/5
+        // Solo Admin puede editar
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var adoptante = await _context.DbSetAdoptante.FindAsync(id);
             if (adoptante == null)
-            {
                 return NotFound();
-            }
+
             return View(adoptante);
         }
 
-        // POST: Adoptante/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("AdoptanteId,NombreAdoptante,CorreoElectronico")] Adoptante adoptante)
         {
             if (id != adoptante.AdoptanteId)
-            {
                 return NotFound();
-            }
 
             if (ModelState.IsValid)
             {
@@ -102,47 +96,39 @@ namespace Adopcion_mascotas.Controllers
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!AdoptanteExists(adoptante.AdoptanteId))
-                    {
                         return NotFound();
-                    }
                     else
-                    {
                         throw;
-                    }
                 }
                 return RedirectToAction(nameof(Index));
             }
             return View(adoptante);
         }
 
-        // GET: Adoptante/Delete/5
+        // Solo Admin puede eliminar
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var adoptante = await _context.DbSetAdoptante
                 .FirstOrDefaultAsync(m => m.AdoptanteId == id);
             if (adoptante == null)
-            {
                 return NotFound();
-            }
 
             return View(adoptante);
         }
 
-        // POST: Adoptante/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var adoptante = await _context.DbSetAdoptante.FindAsync(id);
             if (adoptante != null)
-            {
                 _context.DbSetAdoptante.Remove(adoptante);
-            }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -154,3 +140,4 @@ namespace Adopcion_mascotas.Controllers
         }
     }
 }
+
